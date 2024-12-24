@@ -18,7 +18,7 @@ MySQL 采用 TCP 作为服务器和客户端之间的网络通信协议。在网
 
 ### 1.2 服务器处理客户客户端请求
 
-![image-20241224104755111](E:\githouse\learning-notes\数据库\MySQL\MySQL运行原理\assets\images\image-20241224104755111.png)
+![image-20241224144410508](assets/images/image-20241224144410508.png)
 
 #### 连接管理
 

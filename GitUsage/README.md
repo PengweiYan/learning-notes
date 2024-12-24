@@ -21,7 +21,7 @@ git pull origin master
 
 ```
 git add .
-git commit -m 'first_commit'
+git commit -m '注释信息'
 git push origin master
 ```
 
