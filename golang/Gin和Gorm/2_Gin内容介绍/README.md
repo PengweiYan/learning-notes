@@ -337,7 +337,7 @@ func main() {
 	router.LoadHTMLFiles("./index.tmpl")
 
 	router.GET("/index", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "index.tmpl", "<a href='https://liwenzhou.com'>李文周的博客</a>")
+		c.HTML(http.StatusOK, "index.tmpl", "<a href='https://bk.com'>博客</a>")
 	})
 
 	router.Run(":8080")
@@ -366,7 +366,7 @@ func main() {
 
 ### 静态文件处理
 
-当我们渲染的HTML文件中引用了静态文件时，我们只需要按照以下方式在渲染页面前调用`gin.Static`方法即可。
+当我们渲染的HTML文件中引用了静态文件时，我们只需要按照以下方式在渲染页面前调用`gin.Static`方法即可。第一个参数为HTML文件中使用的目录，第二个参数为实际存放目录
 
 ```go
 func main() {
@@ -465,7 +465,7 @@ func main() {
 	r.GET("/moreJSON", func(c *gin.Context) {
 		// 方法二：使用结构体
 		var msg struct {
-			Name    string `json:"user"`
+			Name    string `json:"user"` //JSON标签
 			Message string
 			Age     int
 		}
@@ -575,6 +575,7 @@ func main() {
 	r.POST("/user/search", func(c *gin.Context) {
 		// DefaultPostForm取不到值时会返回指定的默认值
 		//username := c.DefaultPostForm("username", "小王子")
+        // GetPostForm返回值和bool值
 		username := c.PostForm("username")
 		address := c.PostForm("address")
 		//输出json结果给调用方
@@ -770,7 +771,7 @@ r.GET("/test", func(c *gin.Context) {
 
 ### 路由重定向
 
-路由重定向，使用`HandleContext`：
+路由重定向，不会通知客户端，使用`HandleContext`：
 
 ```go
 r.GET("/test", func(c *gin.Context) {
@@ -862,7 +863,7 @@ Gin框架允许开发者在处理请求的过程中，加入用户自己的钩�
 Gin中的中间件必须是一个`gin.HandlerFunc`类型。例如我们像下面的代码一样定义一个统计请求耗时的中间件。
 
 ```go
-// StatCost 是一个统计耗时请求耗时的中间件
+// StatCost 是一个统计耗时请求耗时的中间件，闭包写法实现灵活控制，方便传入参数
 func StatCost() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
@@ -900,7 +901,7 @@ func main() {
 	r.Use(StatCost())
 	
 	r.GET("/test", func(c *gin.Context) {
-		name := c.MustGet("name").(string) // 从上下文取值
+		name := c.MustGet("name").(string) // 从上下文取值,相比Get返回值少一个bool值，取不到值直接panic
 		log.Println(name)
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello world!",

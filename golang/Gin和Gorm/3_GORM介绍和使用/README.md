@@ -24,6 +24,8 @@ Object Relational Mapping：对象关系映射
 **优点：**
 
 - 提高开发效率
+- 防止SQL注入攻击，因为它会自动对参数进行适当的转义或使用预编译语句
+- 更换数据库方便
 
 **缺点:**
 
@@ -188,7 +190,7 @@ func main() {
 	db.Create(&u2)
 	// 查询
 	var u = new(UserInfo)
-	db.First(u)
+	db.First(&u)
 	fmt.Printf("%#v\n", u)
 
 	var uu UserInfo
@@ -235,7 +237,7 @@ type User struct {
 ```go
 // 不使用gorm.Model，自行定义模型
 type User struct {
-  ID   int
+  ID   int //默认ID主键
   Name string
 }
 ```
